@@ -40,14 +40,4 @@ const App = () => {
 	);
 };
 
-const styles = StyleSheet.create({
-	root: {
-		flex: 1,
-		paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-	},
-	container: {
-		flex: 1,
-	},
-});
-
 export default App;

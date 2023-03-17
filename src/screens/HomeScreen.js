@@ -10,6 +10,7 @@ import { useState } from "react";
 import InfoCard from "../components/InfoCard";
 import Selector from "../components/Selector";
 import TaskContainer from "../components/TaskContainer";
+import CreateTaskButton from "../components/CreateTaskButton";
 import colors from "../config/colors";
 
 const HomeScreen = ({ navigation }) => {
@@ -73,6 +74,7 @@ const HomeScreen = ({ navigation }) => {
 					></Selector>
 				</ScrollView>
 				<TaskContainer />
+				<CreateTaskButton />
 			</View>
 		</SafeAreaView>
 	);
@@ -82,10 +84,12 @@ const styles = StyleSheet.create({
 	root: {
 		flex: 1,
 		backgroundColor: colors.lightgray,
+		paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
 	},
 	container: {
 		flex: 1,
-		paddingTop: "3%",
+		paddingTop: 5,
+		paddingBottom: 15,
 		justifyContent: "flex-start",
 	},
 	title: {

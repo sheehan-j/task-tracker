@@ -1,12 +1,13 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import colors from "../config/colors";
 
 const Selector = ({ value, active, setActive }) => {
 	return (
 		<>
 			{value === active && (
 				<LinearGradient
-					colors={["#BFACE2", "#655DBB"]}
+					colors={[colors.extralightpurple, colors.medpurple]}
 					start={{ x: 0, y: 0 }}
 					end={{ x: 1, y: 0 }}
 					style={styles.active}
@@ -38,7 +39,7 @@ export default Selector;
 
 const styles = StyleSheet.create({
 	inactive: {
-		backgroundColor: "rgba(62, 84, 172, 0.15)",
+		backgroundColor: colors.purpletrans,
 		paddingTop: 8,
 		paddingBottom: 8,
 		paddingLeft: 20,
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
 		borderRadius: 30,
 	},
 	inactive_text: {
-		color: "#2d3c78",
+		color: colors.purpletext,
 		fontFamily: "Inter",
 		fontSize: 16,
 	},

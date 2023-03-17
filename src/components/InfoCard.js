@@ -6,10 +6,8 @@ const InfoCard = ({ progress }) => {
 	return (
 		<View style={styles.card_container}>
 			<View style={styles.card}>
-				<Text style={styles.info_card_title}>[Category]</Text>
-				<Text style={styles.info_card_subtitle}>
-					[Number] Tasks Total
-				</Text>
+				<Text style={styles.info_card_title}>Projects</Text>
+				<Text style={styles.info_card_subtitle}>14 Total Tasks</Text>
 
 				{/* Container for progress bar and percentage */}
 				<View
