@@ -16,6 +16,27 @@ import colors from "../config/colors";
 const HomeScreen = ({ navigation }) => {
 	const [active, setActive] = useState("One");
 
+	const mockTasks = [
+		{
+			title: "Buy groceries",
+			subtitle: "Get apples, oranges, and pears from Publix",
+			completed: false,
+			important: false,
+		},
+		{
+			title: "Wash car",
+			subtitle: "",
+			completed: true,
+			important: true,
+		},
+		{
+			title: "Register for classes",
+			subtitle: "Appointment is March 27th at 2:00p.m.",
+			completed: false,
+			important: true,
+		},
+	];
+
 	return (
 		<SafeAreaView style={styles.root}>
 			<View style={styles.container}>
@@ -73,7 +94,7 @@ const HomeScreen = ({ navigation }) => {
 						setActive={setActive}
 					></Selector>
 				</ScrollView>
-				<TaskContainer />
+				<TaskContainer tasks={mockTasks} />
 				<CreateTaskButton />
 			</View>
 		</SafeAreaView>

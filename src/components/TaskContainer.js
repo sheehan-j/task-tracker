@@ -1,6 +1,7 @@
 import { StyleSheet, Text, ScrollView, View } from "react-native";
+import Task from "./Task";
 
-const TaskContainer = () => {
+const TaskContainer = ({ tasks }) => {
 	return (
 		<ScrollView
 			style={{
@@ -12,7 +13,15 @@ const TaskContainer = () => {
 				borderRadius: 10,
 			}}
 		>
-			<Text>TaskContainer</Text>
+			{tasks.map((task, index) => (
+				<Task
+					key={index}
+					title={task.title}
+					subtitle={task.subtitle}
+					important={task.important}
+					completed={task.completed}
+				/>
+			))}
 		</ScrollView>
 	);
 };

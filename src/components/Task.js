@@ -27,8 +27,8 @@ const Task = ({ title, subtitle, completed, important }) => {
 	return (
 		<Swipeable
 			renderRightActions={renderRightActions}
-			overshootLeft={false}
 			overshootRight={false}
+			useNativeDriver={true}
 		>
 			<View style={styles.container}>
 				<Text style={styles.title}>{title}</Text>
@@ -51,13 +51,14 @@ const styles = StyleSheet.create({
 	},
 	title: {
 		fontFamily: "Inter-Semi",
-		fontSize: 18,
+		fontSize: 19,
 		color: colors.purpletext,
 	},
 	subtitle: {
 		fontFamily: "Inter-Light",
 		fontSize: 16,
 		color: colors.gray,
+		width: "80%",
 	},
 	deleteButton: {
 		backgroundColor: "#f74f4f",
