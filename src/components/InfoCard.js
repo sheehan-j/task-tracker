@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import colors from "../config/colors";
 
 const InfoCard = ({ progress }) => {
 	return (
@@ -30,7 +31,7 @@ const InfoCard = ({ progress }) => {
 						}}
 					>
 						<LinearGradient
-							colors={["#BFACE2", "#655DBB"]}
+							colors={[colors.extralightpurple, colors.medpurple]}
 							style={{
 								width: progress + "%",
 								borderRadius: 10,
@@ -51,7 +52,7 @@ export default InfoCard;
 
 const styles = StyleSheet.create({
 	card_container: {
-		backgroundColor: "#f8f8f8",
+		backgroundColor: colors.lightgray,
 		marginLeft: 20,
 		marginRight: 20,
 		// shadowColor: "#000000",
@@ -70,18 +71,18 @@ const styles = StyleSheet.create({
 		paddingRight: 20,
 		paddingTop: 25,
 		paddingBottom: 25,
-		backgroundColor: "rgba(62, 84, 172, 0.15)",
+		backgroundColor: colors.purpletrans,
 		borderRadius: 10,
 	},
 	info_card_title: {
 		fontFamily: "Inter-Semi",
 		fontSize: 24,
-		color: "#2d3c78",
+		color: colors.medpurple,
 	},
 	info_card_subtitle: {
-		fontFamily: "Inter",
+		fontFamily: "Inter-Light",
 		fontSize: 17,
-		color: "#3E54AC",
+		color: "#404040",
 		marginTop: 4,
 	},
 });

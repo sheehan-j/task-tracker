@@ -43,7 +43,6 @@ const App = () => {
 const styles = StyleSheet.create({
 	root: {
 		flex: 1,
-		backgroundColor: "#f1f1f1",
 		paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
 	},
 	container: {

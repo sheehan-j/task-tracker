@@ -6,10 +6,11 @@ import {
 	StyleSheet,
 	ScrollView,
 } from "react-native";
+import { useState } from "react";
 import InfoCard from "../components/InfoCard";
 import Selector from "../components/Selector";
-import { useState } from "react";
 import TaskContainer from "../components/TaskContainer";
+import colors from "../config/colors";
 
 const HomeScreen = ({ navigation }) => {
 	const [active, setActive] = useState("One");
@@ -80,7 +81,7 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
 	root: {
 		flex: 1,
-		backgroundColor: "#f8f8f8",
+		backgroundColor: colors.lightgray,
 	},
 	container: {
 		flex: 1,
@@ -88,14 +89,14 @@ const styles = StyleSheet.create({
 		justifyContent: "flex-start",
 	},
 	title: {
-		color: "#3E54AC",
+		color: colors.medpurple,
 		fontFamily: "Inter-Bold",
 		fontSize: 40,
 		padding: 0,
 		lineHeight: 45,
 	},
 	subtitle: {
-		color: "#202020",
+		color: colors.gray,
 		fontFamily: "Inter",
 		fontSize: 22,
 	},
