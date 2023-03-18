@@ -1,7 +1,14 @@
-import { StyleSheet, Text, ScrollView, View } from "react-native";
+import { StyleSheet, LayoutAnimation, ScrollView } from "react-native";
 import Task from "./Task";
 
-const TaskContainer = ({ tasks }) => {
+const TaskContainer = ({ tasks, setTasks }) => {
+	const handleOnDelete = (id) => {
+		setTasks(tasks.filter((task) => task.id != id));
+
+		// Animate the deletion of the task
+		LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+	};
+
 	return (
 		<ScrollView
 			style={{
@@ -13,13 +20,11 @@ const TaskContainer = ({ tasks }) => {
 				borderRadius: 10,
 			}}
 		>
-			{tasks.map((task, index) => (
+			{tasks.map((task) => (
 				<Task
-					key={index}
-					title={task.title}
-					subtitle={task.subtitle}
-					important={task.important}
-					completed={task.completed}
+					key={task.id}
+					onDelete={() => handleOnDelete(task.id)}
+					{...task}
 				/>
 			))}
 		</ScrollView>

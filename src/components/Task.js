@@ -3,7 +3,7 @@ import { Swipeable } from "react-native-gesture-handler";
 import colors from "../config/colors";
 import { EvilIcons } from "@expo/vector-icons";
 
-const Task = ({ title, subtitle, completed, important }) => {
+const Task = ({ id, title, subtitle, onDelete, completed, important }) => {
 	const renderRightActions = (progress, dragX) => {
 		const translateX = dragX.interpolate({
 			inputRange: [-80, 0, 0],
@@ -11,7 +11,7 @@ const Task = ({ title, subtitle, completed, important }) => {
 			extrapolate: "clamp",
 		});
 		return (
-			<Pressable onPress={() => alert("Deleted")}>
+			<Pressable onPress={() => onDelete()}>
 				<Animated.View
 					style={[
 						styles.deleteButton,
