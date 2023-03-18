@@ -1,12 +1,24 @@
 import { StyleSheet, LayoutAnimation, ScrollView } from "react-native";
 import Task from "./Task";
 
-const TaskContainer = ({ tasks, setTasks }) => {
+const TaskContainer = ({ tasks, setTasks, active }) => {
 	const handleOnDelete = (id) => {
 		setTasks(tasks.filter((task) => task.id != id));
 
 		// Animate the deletion of the task
-		LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+		const animConfig = {
+			duration: 200,
+			update: {
+				type: LayoutAnimation.Types.easeInEaseOut,
+			},
+			delete: {
+				duration: 100,
+				type: LayoutAnimation.Types.easeInEaseOut,
+				property: LayoutAnimation.Properties.opacity,
+			},
+		};
+
+		LayoutAnimation.configureNext(animConfig);
 	};
 
 	return (
@@ -20,13 +32,17 @@ const TaskContainer = ({ tasks, setTasks }) => {
 				borderRadius: 10,
 			}}
 		>
-			{tasks.map((task) => (
-				<Task
-					key={task.id}
-					onDelete={() => handleOnDelete(task.id)}
-					{...task}
-				/>
-			))}
+			{tasks.map((task) => {
+				if (task.category === active) {
+					return (
+						<Task
+							key={task.id}
+							onDelete={() => handleOnDelete(task.id)}
+							{...task}
+						/>
+					);
+				}
+			})}
 		</ScrollView>
 	);
 };

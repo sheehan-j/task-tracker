@@ -1,4 +1,10 @@
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import {
+	StyleSheet,
+	Text,
+	View,
+	Pressable,
+	LayoutAnimation,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import colors from "../config/colors";
 
@@ -12,11 +18,7 @@ const Selector = ({ value, active, setActive }) => {
 					end={{ x: 1, y: 0 }}
 					style={styles.active}
 				>
-					<Pressable
-						onPress={() => {
-							setActive(value);
-						}}
-					>
+					<Pressable>
 						<Text style={styles.active_text}>{value}</Text>
 					</Pressable>
 				</LinearGradient>
@@ -24,9 +26,7 @@ const Selector = ({ value, active, setActive }) => {
 			{value !== active && (
 				<Pressable
 					style={styles.inactive}
-					onPress={() => {
-						setActive(value);
-					}}
+					onPress={() => setActive(value)}
 				>
 					<Text style={styles.inactive_text}>{value}</Text>
 				</Pressable>

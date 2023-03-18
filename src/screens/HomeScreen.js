@@ -18,6 +18,7 @@ const HomeScreen = ({ navigation }) => {
 	const [tasks, setTasks] = useState([
 		{
 			id: 1,
+			category: "One",
 			title: "Buy groceries",
 			subtitle: "Get apples, oranges, and pears from Publix",
 			completed: false,
@@ -25,6 +26,7 @@ const HomeScreen = ({ navigation }) => {
 		},
 		{
 			id: 2,
+			category: "Two",
 			title: "Wash car",
 			subtitle: "",
 			completed: true,
@@ -32,6 +34,7 @@ const HomeScreen = ({ navigation }) => {
 		},
 		{
 			id: 3,
+			category: "One",
 			title: "Register for classes",
 			subtitle: "Appointment is March 27th at 2:00p.m.",
 			completed: false,
@@ -55,7 +58,19 @@ const HomeScreen = ({ navigation }) => {
 					<Text style={styles.subtitle}>Hello,</Text>
 					<Text style={styles.title}>Jordan</Text>
 				</View>
-				<InfoCard progress={50}></InfoCard>
+				<InfoCard
+					active={active}
+					task_count={
+						tasks.filter((task) => task.category === active).length
+					}
+					completed_count={
+						tasks.filter(
+							(task) =>
+								task.category === active &&
+								task.completed === true
+						).length
+					}
+				></InfoCard>
 				<ScrollView
 					style={{ flexGrow: 0, marginTop: 20 }}
 					contentContainerStyle={{
@@ -96,7 +111,11 @@ const HomeScreen = ({ navigation }) => {
 						setActive={setActive}
 					></Selector>
 				</ScrollView>
-				<TaskContainer tasks={tasks} setTasks={setTasks} />
+				<TaskContainer
+					tasks={tasks}
+					setTasks={setTasks}
+					active={active}
+				/>
 				<CreateTaskButton />
 			</View>
 		</SafeAreaView>
