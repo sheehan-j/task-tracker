@@ -21,6 +21,21 @@ const TaskContainer = ({ tasks, setTasks, active }) => {
 		LayoutAnimation.configureNext(animConfig);
 	};
 
+	const handleOnComplete = (id) => {
+		const updatedTasks = tasks.map((task) => {
+			if (task.id === id) {
+				return {
+					...task,
+					completed: (task.completed = !task.completed),
+				};
+			}
+
+			return task;
+		});
+
+		setTasks(updatedTasks);
+	};
+
 	return (
 		<ScrollView
 			style={{
@@ -38,6 +53,7 @@ const TaskContainer = ({ tasks, setTasks, active }) => {
 						<Task
 							key={task.id}
 							onDelete={() => handleOnDelete(task.id)}
+							onComplete={() => handleOnComplete(task.id)}
 							{...task}
 						/>
 					);
