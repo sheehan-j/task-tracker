@@ -8,11 +8,13 @@ import {
 	ScrollView,
 } from "react-native";
 import { useState, useEffect } from "react";
+import { StatusBar } from "expo-status-bar";
 import InfoCard from "../components/InfoCard";
 import Selector from "../components/Selector";
 import TaskContainer from "../components/TaskContainer";
 import CreateTaskButton from "../components/CreateTaskButton";
 import colors from "../config/colors";
+import CreateTaskModal from "../components/CreateTaskModal";
 
 const HomeScreen = ({ navigation }) => {
 	const [tasks, setTasks] = useState([
@@ -98,7 +100,7 @@ const HomeScreen = ({ navigation }) => {
 				style={[
 					styles.modal_background,
 					{ opacity: opacity },
-					{ display: modalVisible ? "" : "none" },
+					{ display: modalVisible ? "flex" : "none" },
 				]}
 				visible={modalVisible}
 			/>
@@ -152,9 +154,7 @@ const HomeScreen = ({ navigation }) => {
 							setModalVisible(!modalVisible);
 						}}
 					>
-						<View style={styles.modal_container}>
-							<Text>bruh</Text>
-						</View>
+						<CreateTaskModal />
 					</Modal>
 
 					<CreateTaskButton
@@ -171,7 +171,7 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
 	root: {
 		flex: 1,
-		backgroundColor: colors.lightgray,
+		backgroundColor: colors.extralightgray,
 		paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
 	},
 	container: {

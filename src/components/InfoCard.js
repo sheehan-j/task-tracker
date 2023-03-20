@@ -95,7 +95,7 @@ export default InfoCard;
 
 const styles = StyleSheet.create({
 	card_container: {
-		backgroundColor: colors.lightgray,
+		backgroundColor: colors.extralightgray,
 		marginLeft: 20,
 		marginRight: 20,
 	},

@@ -5,7 +5,8 @@ const colors = {
 	purpletrans: "rgba(62, 84, 172, 0.15)",
 	purpletext: "#2d3c78",
 	gray: "#202020",
-	lightgray: "#f4f4f4",
+	lightgray: "#707070",
+	extralight: "#f4f4f4",
 	pressed: "rgba(64,64,64,0.2)",
 };
 
