@@ -14,117 +14,38 @@ import Selector from "./Selector";
 import colors from "../config/colors";
 
 const CreateTaskModal = ({
-	tasks,
-	setTasks,
 	categories,
-	handleTaskModalVisibleChange,
+	setCategories,
+	handleCategoryModalVisibleChange,
 }) => {
-	const [title, setTitle] = useState("");
-	const [description, setDescription] = useState("");
-	const [important, setImportant] = useState(false);
-	const [selectedCategory, setSelectedCategory] = useState(
-		categories[0].name
-	);
-
-	const resetFields = () => {
-		setTitle("");
-		setDescription("");
-		setSelectedCategory(categories[0].name);
-		setImportant(false);
-	};
+	const [name, setName] = useState("");
 
 	const handleCreate = () => {
-		const tempId = tasks[tasks.length - 1]._id + 1;
-		const newTask = {
+		const tempId = categories[categories.length - 1]._id + 1;
+		const newCategory = {
 			_id: tempId,
-			category: selectedCategory,
-			title: title,
-			subtitle: description,
-			completed: false,
-			important: important,
+			name: name,
 		};
 
-		setTasks([...tasks, newTask]);
-		resetFields();
-		handleTaskModalVisibleChange();
+		setCategories([...categories, newCategory]);
+		setName("");
+		handleCategoryModalVisibleChange();
 	};
 
 	return (
 		<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
 			<View style={styles.root}>
 				<View style={styles.container}>
-					<Text style={styles.modal_title}>Create new task</Text>
+					<Text style={styles.modal_title}>Create new category</Text>
 
-					<Text style={styles.input_label}>Title</Text>
+					<Text style={styles.input_label}>Name</Text>
 					<TextInput
 						// placeholder="Title"
 						placeholderTextColor={colors.lightgray}
 						style={styles.input}
-						value={title}
-						onChangeText={setTitle}
+						value={name}
+						onChangeText={setName}
 					/>
-
-					<Text style={styles.input_label}>Description</Text>
-					<TextInput
-						// placeholder="Description"
-						placeholderTextColor={colors.lightgray}
-						style={styles.input}
-						value={description}
-						onChangeText={setDescription}
-					/>
-
-					<Text style={styles.input_label}>Category</Text>
-					<ScrollView
-						style={{ flexGrow: 0, marginBottom: 20, marginTop: 5 }}
-						contentContainerStyle={{
-							paddingLeft: 20,
-							paddingRight: 20,
-						}}
-						horizontal={true}
-						showsHorizontalScrollIndicator={false}
-					>
-						{categories.map((category) => (
-							<Selector
-								key={category._id}
-								value={category.name}
-								active={selectedCategory}
-								setActive={setSelectedCategory}
-							></Selector>
-						))}
-					</ScrollView>
-
-					<View
-						style={{
-							width: "100%",
-							flexDirection: "row",
-							justifyContent: "space-between",
-							marginBottom: 20,
-							paddingRight: 20,
-						}}
-					>
-						<Text style={styles.input_label}>Important</Text>
-						<Pressable
-							style={styles.important_button}
-							hitSlop={15}
-							onPress={() => setImportant(!important)}
-						>
-							{important && (
-								<LinearGradient
-									colors={[
-										colors.extralightpurple,
-										colors.medpurple,
-									]}
-									style={{
-										borderRadius: 17.5,
-										width: "100%",
-										height: "100%",
-									}}
-									start={{ x: 0, y: 0 }}
-									end={{ x: 1, y: 0 }}
-								/>
-							)}
-						</Pressable>
-					</View>
 
 					<View
 						style={{
@@ -144,8 +65,8 @@ const CreateTaskModal = ({
 									styles.button_pressable,
 								]}
 								onPress={() => {
-									resetFields();
-									handleTaskModalVisibleChange();
+									setName("");
+									handleCategoryModalVisibleChange();
 								}}
 							>
 								<Text style={styles.cancel_button_text}>

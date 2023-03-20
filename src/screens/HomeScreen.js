@@ -4,6 +4,7 @@ import {
 	SafeAreaView,
 	Text,
 	Modal,
+	Pressable,
 	StyleSheet,
 	ScrollView,
 } from "react-native";
@@ -13,8 +14,9 @@ import InfoCard from "../components/InfoCard";
 import Selector from "../components/Selector";
 import TaskContainer from "../components/TaskContainer";
 import CreateTaskButton from "../components/CreateTaskButton";
-import colors from "../config/colors";
 import CreateTaskModal from "../components/CreateTaskModal";
+import CreateCategoryModal from "../components/CreateCategoryModal";
+import colors from "../config/colors";
 
 const HomeScreen = ({ navigation }) => {
 	const [tasks, setTasks] = useState([
@@ -61,7 +63,8 @@ const HomeScreen = ({ navigation }) => {
 	]);
 
 	const [active, setActive] = useState("One");
-	const [modalVisible, setModalVisible] = useState(false);
+	const [taskModalVisible, setTaskModalVisible] = useState(false);
+	const [categoryModalVisible, setCategoryModalVisible] = useState(false);
 	const [taskCount, setTaskCount] = useState(
 		tasks.filter((task) => task.category === active).length
 	);
@@ -84,9 +87,7 @@ const HomeScreen = ({ navigation }) => {
 	// Animated modal background fade in
 	const animatedOpacity = useRef(new Animated.Value(0)).current;
 
-	const handleModalVisibleChange = () => {
-		setModalVisible(!modalVisible);
-
+	const animateModalBackground = () => {
 		animatedOpacity.setValue(0);
 
 		Animated.timing(animatedOpacity, {
@@ -96,6 +97,16 @@ const HomeScreen = ({ navigation }) => {
 		}).start();
 	};
 
+	const handleTaskModalVisibleChange = () => {
+		setTaskModalVisible(!taskModalVisible);
+		animateModalBackground();
+	};
+
+	const handleCategoryModalVisibleChange = () => {
+		setCategoryModalVisible(!categoryModalVisible);
+		animateModalBackground();
+	};
+
 	return (
 		<View style={{ flex: 1 }}>
 			{/* Transparent Gray Background for Modal */}
@@ -103,9 +114,14 @@ const HomeScreen = ({ navigation }) => {
 				style={[
 					styles.modal_background,
 					{ opacity: animatedOpacity },
-					{ display: modalVisible ? "flex" : "none" },
+					{
+						display:
+							taskModalVisible || categoryModalVisible
+								? "flex"
+								: "none",
+					},
 				]}
-				visible={modalVisible}
+				visible={taskModalVisible || categoryModalVisible}
 			/>
 			<SafeAreaView style={styles.root}>
 				<View style={styles.container}>
@@ -139,11 +155,14 @@ const HomeScreen = ({ navigation }) => {
 								setActive={setActive}
 							></Selector>
 						))}
-						<Selector
-							value={"+"}
-							active={active}
-							setActive={setActive}
-						></Selector>
+
+						{/* Add Category Button */}
+						<Pressable
+							style={styles.add_category}
+							onPress={() => handleCategoryModalVisibleChange()}
+						>
+							<Text style={styles.add_category_text}>+</Text>
+						</Pressable>
 					</ScrollView>
 
 					<TaskContainer
@@ -156,20 +175,38 @@ const HomeScreen = ({ navigation }) => {
 					<Modal
 						animationType="slide"
 						transparent={true}
-						visible={modalVisible}
+						visible={categoryModalVisible}
+					>
+						<CreateCategoryModal
+							categories={categories}
+							setCategories={setCategories}
+							handleCategoryModalVisibleChange={
+								handleCategoryModalVisibleChange
+							}
+						/>
+					</Modal>
+
+					<Modal
+						animationType="slide"
+						transparent={true}
+						visible={taskModalVisible}
 					>
 						<CreateTaskModal
 							tasks={tasks}
 							setTasks={setTasks}
 							categories={categories}
-							handleModalVisibleChange={handleModalVisibleChange}
+							handleTaskModalVisibleChange={
+								handleTaskModalVisibleChange
+							}
 						/>
 					</Modal>
 
 					<CreateTaskButton
-						modalVisible={modalVisible}
-						setModalVisible={setModalVisible}
-						handleModalVisibleChange={handleModalVisibleChange}
+						taskModalVisible={taskModalVisible}
+						setTaskModalVisible={setTaskModalVisible}
+						handleTaskModalVisibleChange={
+							handleTaskModalVisibleChange
+						}
 					/>
 				</View>
 			</SafeAreaView>
@@ -223,6 +260,20 @@ const styles = StyleSheet.create({
 		left: 0,
 		zIndex: 1,
 		elevation: 1,
+	},
+	add_category: {
+		backgroundColor: colors.purpletrans,
+		paddingTop: 8,
+		paddingBottom: 8,
+		paddingLeft: 20,
+		paddingRight: 20,
+		marginRight: 7,
+		borderRadius: 30,
+	},
+	add_category_text: {
+		color: colors.purpletext,
+		fontFamily: "Inter",
+		fontSize: 16,
 	},
 });
 

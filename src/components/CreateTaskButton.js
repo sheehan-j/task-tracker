@@ -5,7 +5,7 @@ import colors from "../config/colors";
 const CreateTaskButton = ({
 	modalVisible,
 	setModalVisible,
-	handleModalVisibleChange,
+	handleTaskModalVisibleChange,
 }) => {
 	return (
 		<LinearGradient
@@ -31,7 +31,7 @@ const CreateTaskButton = ({
 						alignItems: "center",
 					},
 				]}
-				onPress={() => handleModalVisibleChange()}
+				onPress={() => handleTaskModalVisibleChange()}
 			>
 				<Text
 					style={{
