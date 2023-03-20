@@ -1,7 +1,14 @@
-import { StyleSheet, LayoutAnimation, ScrollView } from "react-native";
+import {
+	StyleSheet,
+	LayoutAnimation,
+	ScrollView,
+	View,
+	Text,
+} from "react-native";
+import colors from "../config/colors";
 import Task from "./Task";
 
-const TaskContainer = ({ tasks, setTasks, active }) => {
+const TaskContainer = ({ tasks, taskCount, setTasks, active }) => {
 	const handleOnDelete = (id) => {
 		setTasks(tasks.filter((task) => task.id != id));
 
@@ -59,6 +66,20 @@ const TaskContainer = ({ tasks, setTasks, active }) => {
 					);
 				}
 			})}
+			{taskCount === 0 && (
+				<Text
+					style={{
+						fontFamily: "Inter",
+						color: colors.gray,
+						fontSize: 14,
+						width: "100%",
+						textAlign: "center",
+						paddingTop: 15,
+					}}
+				>
+					No tasks here :(
+				</Text>
+			)}
 		</ScrollView>
 	);
 };
