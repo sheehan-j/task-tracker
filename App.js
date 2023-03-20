@@ -2,6 +2,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
+import { StatusBar } from "expo-status-bar";
 import HomeScreen from "./src/screens/HomeScreen";
 
 const Stack = createNativeStackNavigator();
@@ -21,15 +22,18 @@ const App = () => {
 	}
 
 	return (
-		<NavigationContainer>
-			<Stack.Navigator
-				screenOptions={{
-					headerShown: false,
-				}}
-			>
-				<Stack.Screen name="Home" component={HomeScreen} />
-			</Stack.Navigator>
-		</NavigationContainer>
+		<>
+			<StatusBar barStyle={"dark-content"} />
+			<NavigationContainer>
+				<Stack.Navigator
+					screenOptions={{
+						headerShown: false,
+					}}
+				>
+					<Stack.Screen name="Home" component={HomeScreen} />
+				</Stack.Navigator>
+			</NavigationContainer>
+		</>
 	);
 };
 
