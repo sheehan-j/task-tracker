@@ -10,7 +10,7 @@ import Task from "./Task";
 
 const TaskContainer = ({ tasks, taskCount, setTasks, active }) => {
 	const handleOnDelete = (id) => {
-		setTasks(tasks.filter((task) => task.id != id));
+		setTasks(tasks.filter((task) => task._id != id));
 
 		// Animate the deletion of the task
 		const animConfig = {
@@ -30,7 +30,7 @@ const TaskContainer = ({ tasks, taskCount, setTasks, active }) => {
 
 	const handleOnComplete = (id) => {
 		const updatedTasks = tasks.map((task) => {
-			if (task.id === id) {
+			if (task._id === id) {
 				return {
 					...task,
 					completed: (task.completed = !task.completed),
@@ -58,9 +58,9 @@ const TaskContainer = ({ tasks, taskCount, setTasks, active }) => {
 				if (task.category === active) {
 					return (
 						<Task
-							key={task.id}
-							onDelete={() => handleOnDelete(task.id)}
-							onComplete={() => handleOnComplete(task.id)}
+							key={task._id}
+							onDelete={() => handleOnDelete(task._id)}
+							onComplete={() => handleOnComplete(task._id)}
 							{...task}
 						/>
 					);

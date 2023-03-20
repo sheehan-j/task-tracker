@@ -7,7 +7,7 @@ import {
 	StyleSheet,
 	ScrollView,
 } from "react-native";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { StatusBar } from "expo-status-bar";
 import InfoCard from "../components/InfoCard";
 import Selector from "../components/Selector";
@@ -19,7 +19,7 @@ import CreateTaskModal from "../components/CreateTaskModal";
 const HomeScreen = ({ navigation }) => {
 	const [tasks, setTasks] = useState([
 		{
-			id: 1,
+			_id: 1,
 			category: "One",
 			title: "Buy groceries",
 			subtitle: "Get apples, oranges, and pears from Publix",
@@ -27,7 +27,7 @@ const HomeScreen = ({ navigation }) => {
 			important: false,
 		},
 		{
-			id: 2,
+			_id: 2,
 			category: "Two",
 			title: "Wash car",
 			subtitle: "",
@@ -35,7 +35,7 @@ const HomeScreen = ({ navigation }) => {
 			important: true,
 		},
 		{
-			id: 3,
+			_id: 3,
 			category: "One",
 			title: "Register for classes",
 			subtitle: "Appointment is March 27th at 2:00p.m.",
@@ -43,7 +43,7 @@ const HomeScreen = ({ navigation }) => {
 			important: true,
 		},
 		{
-			id: 4,
+			_id: 4,
 			category: "One",
 			title: "Register for classes",
 			subtitle: "Appointment is March 27th at 2:00p.m.",
@@ -57,6 +57,7 @@ const HomeScreen = ({ navigation }) => {
 		{ _id: 2, name: "Two" },
 		{ _id: 3, name: "Three" },
 		{ _id: 4, name: "Four" },
+		{ _id: 5, name: "Five" },
 	]);
 
 	const [active, setActive] = useState("One");
@@ -81,14 +82,16 @@ const HomeScreen = ({ navigation }) => {
 	}, [active, tasks]);
 
 	// Animated modal background fade in
-	const [opacity, setOpacity] = useState(new Animated.Value(0));
+	const animatedOpacity = useRef(new Animated.Value(0)).current;
 
-	const handleOnPress = () => {
+	const handleModalVisibleChange = () => {
 		setModalVisible(!modalVisible);
 
-		Animated.timing(opacity, {
-			toValue: opacity._value === 1 ? 0 : 1,
-			duration: 250,
+		animatedOpacity.setValue(0);
+
+		Animated.timing(animatedOpacity, {
+			toValue: animatedOpacity._value === 1 ? 0 : 1,
+			duration: 300,
 			useNativeDriver: true,
 		}).start();
 	};
@@ -99,7 +102,7 @@ const HomeScreen = ({ navigation }) => {
 			<Animated.View
 				style={[
 					styles.modal_background,
-					{ opacity: opacity },
+					{ opacity: animatedOpacity },
 					{ display: modalVisible ? "flex" : "none" },
 				]}
 				visible={modalVisible}
@@ -136,6 +139,11 @@ const HomeScreen = ({ navigation }) => {
 								setActive={setActive}
 							></Selector>
 						))}
+						<Selector
+							value={"+"}
+							active={active}
+							setActive={setActive}
+						></Selector>
 					</ScrollView>
 
 					<TaskContainer
@@ -149,18 +157,19 @@ const HomeScreen = ({ navigation }) => {
 						animationType="slide"
 						transparent={true}
 						visible={modalVisible}
-						onRequestClose={() => {
-							Alert.alert("Modal has been closed.");
-							setModalVisible(!modalVisible);
-						}}
 					>
-						<CreateTaskModal />
+						<CreateTaskModal
+							tasks={tasks}
+							setTasks={setTasks}
+							categories={categories}
+							handleModalVisibleChange={handleModalVisibleChange}
+						/>
 					</Modal>
 
 					<CreateTaskButton
 						modalVisible={modalVisible}
 						setModalVisible={setModalVisible}
-						handleOnPress={handleOnPress}
+						handleModalVisibleChange={handleModalVisibleChange}
 					/>
 				</View>
 			</SafeAreaView>
