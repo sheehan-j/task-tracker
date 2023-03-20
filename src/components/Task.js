@@ -63,6 +63,7 @@ const Task = ({
 				</View>
 				<Pressable
 					style={styles.completed_button}
+					hitSlop={35}
 					onPress={() => onComplete()}
 				>
 					{completed && (
@@ -88,7 +89,7 @@ export default Task;
 const styles = StyleSheet.create({
 	container: {
 		paddingLeft: 26,
-		paddingRight: 22,
+		paddingRight: 29,
 		paddingTop: 20,
 		paddingBottom: 20,
 		position: "relative",
@@ -107,8 +108,8 @@ const styles = StyleSheet.create({
 		backgroundColor: colors.medpurple,
 	},
 	completed_button: {
-		width: 35,
-		height: 35,
+		width: 25,
+		height: 25,
 		backgroundColor: "white",
 		borderColor: colors.gray,
 		borderWidth: 0.25,

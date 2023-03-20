@@ -2,7 +2,7 @@ import { View, Text, Pressable } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import colors from "../config/colors";
 
-const CreateTaskButton = () => {
+const CreateTaskButton = ({ modalVisible, setModalVisible, handleOnPress }) => {
 	return (
 		<LinearGradient
 			colors={[colors.extralightpurple, colors.medpurple]}
@@ -27,6 +27,7 @@ const CreateTaskButton = () => {
 						alignItems: "center",
 					},
 				]}
+				onPress={() => handleOnPress()}
 			>
 				<Text
 					style={{
