@@ -47,9 +47,14 @@ const Task = ({
 			useNativeDriver={true}
 		>
 			<View style={styles.container} onLayout={handleParentLayout}>
-				<View
-					style={[styles.important_marker, { height: parentHeight }]}
-				></View>
+				{important && (
+					<View
+						style={[
+							styles.important_marker,
+							{ height: parentHeight },
+						]}
+					></View>
+				)}
 				<View style={{ width: "78%" }}>
 					<Text style={styles.title}>{title}</Text>
 					{subtitle && (

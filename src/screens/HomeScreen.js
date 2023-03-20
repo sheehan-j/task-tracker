@@ -6,22 +6,22 @@ import {
 	StyleSheet,
 	ScrollView,
 } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import InfoCard from "../components/InfoCard";
 import Selector from "../components/Selector";
 import TaskContainer from "../components/TaskContainer";
 import CreateTaskButton from "../components/CreateTaskButton";
 import colors from "../config/colors";
+import { TurboModuleRegistry } from "react-native";
 
 const HomeScreen = ({ navigation }) => {
-	const [active, setActive] = useState("One");
 	const [tasks, setTasks] = useState([
 		{
 			id: 1,
 			category: "One",
 			title: "Buy groceries",
 			subtitle: "Get apples, oranges, and pears from Publix",
-			completed: false,
+			completed: true,
 			important: false,
 		},
 		{
@@ -41,6 +41,24 @@ const HomeScreen = ({ navigation }) => {
 			important: true,
 		},
 	]);
+	const [active, setActive] = useState("One");
+	const [taskCount, setTaskCount] = useState(
+		tasks.filter((task) => task.category === active).length
+	);
+	const [completedCount, setCompletedCount] = useState(
+		tasks.filter(
+			(task) => task.category === active && task.completed === true
+		).length
+	);
+
+	useEffect(() => {
+		setTaskCount(tasks.filter((task) => task.category === active).length);
+		setCompletedCount(
+			tasks.filter(
+				(task) => task.category === active && task.completed === true
+			).length
+		);
+	}, [active, tasks]);
 
 	return (
 		<SafeAreaView style={styles.root}>
@@ -60,16 +78,8 @@ const HomeScreen = ({ navigation }) => {
 				</View>
 				<InfoCard
 					active={active}
-					task_count={
-						tasks.filter((task) => task.category === active).length
-					}
-					completed_count={
-						tasks.filter(
-							(task) =>
-								task.category === active &&
-								task.completed === true
-						).length
-					}
+					taskCount={taskCount}
+					completedCount={completedCount}
 				></InfoCard>
 				<ScrollView
 					style={{ flexGrow: 0, marginTop: 20 }}
