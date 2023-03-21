@@ -17,6 +17,44 @@ const getTasksByUser = async (req, res) => {
 	}
 };
 
+const getTask = async (req, res) => {
+	try {
+		const result = await Task.findOne({
+			_id: req.params.task,
+		});
+
+		if (!result) {
+			return res.status(204).json();
+		}
+
+		return res.status(200).json(result);
+	} catch (err) {
+		console.error(err);
+		return res.status(500).json({ error: "Internal server error." });
+	}
+};
+
+const updateTask = async (req, res) => {
+	try {
+		const result = await Task.updateOne(
+			{ _id: req.body._id },
+			{
+				category: req.body.category,
+				title: req.body.title,
+				subtitle: req.body.subtitle,
+				completed: req.body.completed,
+				important: req.body.important,
+				user: req.body.user,
+			}
+		);
+
+		return res.status(200).json();
+	} catch (err) {
+		console.error(err);
+		return res.status(500).json({ error: "Internal server error." });
+	}
+};
+
 const addTask = async (req, res) => {
 	try {
 		const result = await Task.create({
@@ -38,4 +76,6 @@ const addTask = async (req, res) => {
 module.exports = {
 	getTasksByUser,
 	addTask,
+	getTask,
+	updateTask,
 };
