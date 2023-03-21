@@ -17,6 +17,8 @@ import CreateTaskButton from "../components/CreateTaskButton";
 import CreateTaskModal from "../components/CreateTaskModal";
 import CreateCategoryModal from "../components/CreateCategoryModal";
 import colors from "../config/colors";
+import { config } from "../config/constants";
+import { getUserId } from "../util/userUtil";
 
 const HomeScreen = ({ navigation }) => {
 	const [tasks, setTasks] = useState([
@@ -54,15 +56,16 @@ const HomeScreen = ({ navigation }) => {
 		},
 	]);
 
-	const [categories, setCategories] = useState([
-		{ _id: 1, name: "One" },
-		{ _id: 2, name: "Two" },
-		{ _id: 3, name: "Three" },
-		{ _id: 4, name: "Four" },
-		{ _id: 5, name: "Five" },
-	]);
+	// const [categories, setCategories] = useState([
+	// 	{ _id: 1, name: "One" },
+	// 	{ _id: 2, name: "Two" },
+	// 	{ _id: 3, name: "Three" },
+	// 	{ _id: 4, name: "Four" },
+	// 	{ _id: 5, name: "Five" },
+	// ]);
 
-	const [active, setActive] = useState("One");
+	const [categories, setCategories] = useState([]);
+	const [active, setActive] = useState();
 	const [taskModalVisible, setTaskModalVisible] = useState(false);
 	const [categoryModalVisible, setCategoryModalVisible] = useState(false);
 	const [taskCount, setTaskCount] = useState(
@@ -73,6 +76,32 @@ const HomeScreen = ({ navigation }) => {
 			(task) => task.category === active && task.completed === true
 		).length
 	);
+
+	useEffect(() => {
+		const loadCategories = async () => {
+			const categoriesResponse = await getCategories();
+			setCategories(categoriesResponse);
+			setActive(categoriesResponse[0].name);
+		};
+
+		loadCategories();
+	}, []);
+
+	const getCategories = async () => {
+		const userId = await getUserId();
+		const CATEGORIES_URL =
+			config.API_BASE_URL + "/categories/" + userId.toString();
+
+		const response = await fetch(CATEGORIES_URL, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		const result = await response.json();
+
+		return result;
+	};
 
 	// Recalculate task and complete tasks counts when they update
 	useEffect(() => {
