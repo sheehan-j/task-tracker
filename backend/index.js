@@ -14,6 +14,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // Routes
+app.use("/categories", require("./routes/categories"));
+app.use("/users", require("./routes/users"));
+app.use("/tasks", require("./routes/tasks"));
 
 // Open connection
 mongoose.connection.once("open", () => {
