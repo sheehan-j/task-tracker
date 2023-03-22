@@ -48,7 +48,7 @@ const updateTask = async (req, res) => {
 			}
 		);
 
-		return res.status(200).json();
+		return res.status(200).json(result);
 	} catch (err) {
 		console.error(err);
 		return res.status(500).json({ error: "Internal server error." });

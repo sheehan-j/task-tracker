@@ -30,7 +30,7 @@ const TaskContainer = ({ tasks, taskCount, setTasks, active }) => {
 		LayoutAnimation.configureNext(animConfig);
 	};
 
-	const handleOnComplete = (id) => {
+	const handleOnComplete = async (id) => {
 		const updatedTasks = tasks.map((task) => {
 			if (task._id === id) {
 				return {
@@ -41,8 +41,10 @@ const TaskContainer = ({ tasks, taskCount, setTasks, active }) => {
 
 			return task;
 		});
-
 		setTasks(updatedTasks);
+
+		const updatedTask = tasks.find((task) => task._id === id);
+		await TasksApi.updateTask(updatedTask);
 	};
 
 	return (

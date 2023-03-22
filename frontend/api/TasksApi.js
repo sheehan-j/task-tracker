@@ -29,6 +29,21 @@ exports.addTask = async (newTask) => {
 	return result;
 };
 
+exports.updateTask = async (updatedTask) => {
+	const TASKS_URL = config.API_BASE_URL + "/tasks";
+
+	const response = await fetch(TASKS_URL, {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(updatedTask),
+	});
+	const result = await response.json();
+
+	return result;
+};
+
 exports.deleteTask = async (taskId) => {
 	const TASKS_URL = config.API_BASE_URL + "/tasks/by-task/" + taskId;
 
