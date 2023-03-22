@@ -5,12 +5,12 @@ import {
 	TextInput,
 	Pressable,
 	Keyboard,
-	ScrollView,
 	TouchableWithoutFeedback,
 } from "react-native";
 import { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import Selector from "./Selector";
+import CategoriesApi from "../api/CategoriesApi";
+import UsersApi from "../api/UsersApi";
 import colors from "../config/colors";
 
 const CreateTaskModal = ({
@@ -20,12 +20,11 @@ const CreateTaskModal = ({
 }) => {
 	const [name, setName] = useState("");
 
-	const handleCreate = () => {
-		const tempId = categories[categories.length - 1]._id + 1;
-		const newCategory = {
-			_id: tempId,
-			name: name,
-		};
+	const handleCreate = async () => {
+		const userId = await UsersApi.getUserIdByEmail(
+			"jordansheehan26@gmail.com"
+		);
+		const newCategory = await CategoriesApi.addCategory(name, userId);
 
 		setCategories([...categories, newCategory]);
 		setName("");
@@ -40,7 +39,6 @@ const CreateTaskModal = ({
 
 					<Text style={styles.input_label}>Name</Text>
 					<TextInput
-						// placeholder="Title"
 						placeholderTextColor={colors.lightgray}
 						style={styles.input}
 						value={name}

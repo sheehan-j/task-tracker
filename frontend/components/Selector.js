@@ -28,7 +28,10 @@ const Selector = ({ value, setActiveName, active, setActive, _id }) => {
 					style={styles.inactive}
 					onPress={() => {
 						setActive(_id);
-						setActiveName(value);
+						// Check if this exists, not always passed in
+						if (setActiveName) {
+							setActiveName(value);
+						}
 					}}
 				>
 					<Text style={styles.inactive_text}>{value}</Text>

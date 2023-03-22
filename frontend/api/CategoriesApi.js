@@ -14,3 +14,22 @@ exports.getCategoriesByUser = async (userId) => {
 
 	return result;
 };
+
+exports.addCategory = async (name, userId) => {
+	const CATEGORIES_URL = config.API_BASE_URL + "/categories";
+	const newCategory = {
+		name: name,
+		user: userId,
+	};
+
+	const response = await fetch(CATEGORIES_URL, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(newCategory),
+	});
+	const result = await response.json();
+
+	return result;
+};

@@ -88,7 +88,6 @@ const CreateTaskModal = ({
 								value={category.name}
 								active={selectedCategory}
 								setActive={setSelectedCategory}
-								setActiveName={(value) => {}} // Dummy func, not needed here
 							></Selector>
 						))}
 					</ScrollView>

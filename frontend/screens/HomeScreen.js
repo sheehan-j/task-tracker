@@ -22,49 +22,6 @@ import CategoriesApi from "../api/CategoriesApi";
 import TasksApi from "../api/TasksApi";
 
 const HomeScreen = ({ navigation }) => {
-	// const [tasks, setTasks] = useState([
-	// 	{
-	// 		_id: 1,
-	// 		category: "One",
-	// 		title: "Buy groceries",
-	// 		subtitle: "Get apples, oranges, and pears from Publix",
-	// 		completed: true,
-	// 		important: false,
-	// 	},
-	// 	{
-	// 		_id: 2,
-	// 		category: "Two",
-	// 		title: "Wash car",
-	// 		subtitle: "",
-	// 		completed: true,
-	// 		important: true,
-	// 	},
-	// 	{
-	// 		_id: 3,
-	// 		category: "One",
-	// 		title: "Register for classes",
-	// 		subtitle: "Appointment is March 27th at 2:00p.m.",
-	// 		completed: false,
-	// 		important: true,
-	// 	},
-	// 	{
-	// 		_id: 4,
-	// 		category: "One",
-	// 		title: "Register for classes",
-	// 		subtitle: "Appointment is March 27th at 2:00p.m.",
-	// 		completed: false,
-	// 		important: true,
-	// 	},
-	// ]);
-
-	// const [categories, setCategories] = useState([
-	// 	{ _id: 1, name: "One" },
-	// 	{ _id: 2, name: "Two" },
-	// 	{ _id: 3, name: "Three" },
-	// 	{ _id: 4, name: "Four" },
-	// 	{ _id: 5, name: "Five" },
-	// ]);
-
 	const [tasks, setTasks] = useState([]);
 	const [categories, setCategories] = useState([]);
 	const [active, setActive] = useState();
