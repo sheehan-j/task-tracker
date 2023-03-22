@@ -73,9 +73,20 @@ const addTask = async (req, res) => {
 	}
 };
 
+const deleteTask = async (req, res) => {
+	try {
+		const result = await Task.deleteOne({ _id: req.params.task });
+		res.status(200).json(result);
+	} catch (err) {
+		console.error(err);
+		return res.status(500).json({ error: "Internal server error." });
+	}
+};
+
 module.exports = {
 	getTasksByUser,
 	addTask,
 	getTask,
 	updateTask,
+	deleteTask,
 };

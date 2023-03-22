@@ -28,3 +28,17 @@ exports.addTask = async (newTask) => {
 
 	return result;
 };
+
+exports.deleteTask = async (taskId) => {
+	const TASKS_URL = config.API_BASE_URL + "/tasks/by-task/" + taskId;
+
+	const response = await fetch(TASKS_URL, {
+		method: "DELETE",
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+	const result = await response.json();
+
+	return result;
+};

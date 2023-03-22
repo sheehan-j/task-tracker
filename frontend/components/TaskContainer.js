@@ -7,9 +7,11 @@ import {
 } from "react-native";
 import colors from "../config/colors";
 import Task from "./Task";
+import TasksApi from "../api/TasksApi";
 
 const TaskContainer = ({ tasks, taskCount, setTasks, active }) => {
-	const handleOnDelete = (id) => {
+	const handleOnDelete = async (id) => {
+		await TasksApi.deleteTask(id);
 		setTasks(tasks.filter((task) => task._id != id));
 
 		// Animate the deletion of the task
