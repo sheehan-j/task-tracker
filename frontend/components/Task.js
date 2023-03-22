@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
 	subtitle: {
 		fontFamily: "Inter-Light",
 		fontSize: 14,
+		marginTop: 4,
 		color: colors.gray,
 		width: "100%",
 	},
