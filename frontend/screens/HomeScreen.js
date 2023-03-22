@@ -68,6 +68,7 @@ const HomeScreen = ({ navigation }) => {
 	const [tasks, setTasks] = useState([]);
 	const [categories, setCategories] = useState([]);
 	const [active, setActive] = useState();
+	const [activeName, setActiveName] = useState();
 	const [taskModalVisible, setTaskModalVisible] = useState(false);
 	const [categoryModalVisible, setCategoryModalVisible] = useState(false);
 	const [taskCount, setTaskCount] = useState(
@@ -89,7 +90,8 @@ const HomeScreen = ({ navigation }) => {
 			);
 			const tasksResponse = await TasksApi.getTasksByUser(userId);
 			setCategories(categoriesResponse);
-			setActive(categoriesResponse[0].name);
+			setActive(categoriesResponse[0]._id);
+			setActiveName(categoriesResponse[0].name);
 			setTasks(tasksResponse);
 		};
 
@@ -154,7 +156,7 @@ const HomeScreen = ({ navigation }) => {
 					</View>
 
 					<InfoCard
-						active={active}
+						activeName={activeName}
 						taskCount={taskCount}
 						completedCount={completedCount}
 					></InfoCard>
@@ -172,9 +174,11 @@ const HomeScreen = ({ navigation }) => {
 						{categories.map((category) => (
 							<Selector
 								key={category._id}
+								_id={category._id}
 								value={category.name}
 								active={active}
 								setActive={setActive}
+								setActiveName={setActiveName}
 							></Selector>
 						))}
 

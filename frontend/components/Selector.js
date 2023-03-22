@@ -8,10 +8,10 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import colors from "../config/colors";
 
-const Selector = ({ value, active, setActive }) => {
+const Selector = ({ value, setActiveName, active, setActive, _id }) => {
 	return (
 		<>
-			{value === active && (
+			{_id === active && (
 				<LinearGradient
 					colors={[colors.extralightpurple, colors.medpurple]}
 					start={{ x: 0, y: 0 }}
@@ -23,10 +23,13 @@ const Selector = ({ value, active, setActive }) => {
 					</Pressable>
 				</LinearGradient>
 			)}
-			{value !== active && (
+			{_id !== active && (
 				<Pressable
 					style={styles.inactive}
-					onPress={() => setActive(value)}
+					onPress={() => {
+						setActive(_id);
+						setActiveName(value);
+					}}
 				>
 					<Text style={styles.inactive_text}>{value}</Text>
 				</Pressable>

@@ -3,7 +3,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import colors from "../config/colors";
 
-const InfoCard = ({ active, taskCount, completedCount }) => {
+const InfoCard = ({ activeName, taskCount, completedCount }) => {
 	// Get the height of the gray background for the progress bar
 	const [parentWidth, setParentWidth] = useState(0);
 	const handleParentLayout = (e) => {
@@ -36,7 +36,7 @@ const InfoCard = ({ active, taskCount, completedCount }) => {
 	return (
 		<View style={styles.card_container}>
 			<View style={styles.card}>
-				<Text style={styles.info_card_title}>{active}</Text>
+				<Text style={styles.info_card_title}>{activeName}</Text>
 				<Text style={styles.info_card_subtitle}>
 					{taskCount} Total Task{taskCount !== 1 && "s"}
 				</Text>

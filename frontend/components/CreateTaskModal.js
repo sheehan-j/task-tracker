@@ -22,14 +22,12 @@ const CreateTaskModal = ({
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
 	const [important, setImportant] = useState(false);
-	const [selectedCategory, setSelectedCategory] = useState(
-		categories[0].name
-	);
+	const [selectedCategory, setSelectedCategory] = useState(categories[0]._id);
 
 	const resetFields = () => {
 		setTitle("");
 		setDescription("");
-		setSelectedCategory(categories[0].name);
+		setSelectedCategory(categories[0]._id);
 		setImportant(false);
 	};
 
@@ -86,9 +84,11 @@ const CreateTaskModal = ({
 						{categories.map((category) => (
 							<Selector
 								key={category._id}
+								_id={category._id}
 								value={category.name}
 								active={selectedCategory}
 								setActive={setSelectedCategory}
+								setActiveName={(value) => {}} // Dummy func, not needed here
 							></Selector>
 						))}
 					</ScrollView>
