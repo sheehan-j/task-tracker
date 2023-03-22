@@ -13,3 +13,18 @@ exports.getTasksByUser = async (userId) => {
 
 	return result;
 };
+
+exports.addTask = async (newTask) => {
+	const TASKS_URL = config.API_BASE_URL + "/tasks";
+
+	const response = await fetch(TASKS_URL, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(newTask),
+	});
+	const result = await response.json();
+
+	return result;
+};

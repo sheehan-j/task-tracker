@@ -24,9 +24,13 @@ const CreateTaskModal = ({
 		const userId = await UsersApi.getUserIdByEmail(
 			"jordansheehan26@gmail.com"
 		);
-		const newCategory = await CategoriesApi.addCategory(name, userId);
+		const newCategory = {
+			name: name,
+			user: userId,
+		};
+		const categoryResponse = await CategoriesApi.addCategory(newCategory);
 
-		setCategories([...categories, newCategory]);
+		setCategories([...categories, categoryResponse]);
 		setName("");
 		handleCategoryModalVisibleChange();
 	};

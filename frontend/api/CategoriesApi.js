@@ -15,12 +15,8 @@ exports.getCategoriesByUser = async (userId) => {
 	return result;
 };
 
-exports.addCategory = async (name, userId) => {
+exports.addCategory = async (newCategory) => {
 	const CATEGORIES_URL = config.API_BASE_URL + "/categories";
-	const newCategory = {
-		name: name,
-		user: userId,
-	};
 
 	const response = await fetch(CATEGORIES_URL, {
 		method: "POST",

@@ -11,6 +11,8 @@ import {
 import { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import Selector from "./Selector";
+import UsersApi from "../api/UsersApi";
+import TasksApi from "../api/TasksApi";
 import colors from "../config/colors";
 
 const CreateTaskModal = ({
@@ -31,18 +33,21 @@ const CreateTaskModal = ({
 		setImportant(false);
 	};
 
-	const handleCreate = () => {
-		const tempId = tasks[tasks.length - 1]._id + 1;
+	const handleCreate = async () => {
+		const userId = await UsersApi.getUserIdByEmail(
+			"jordansheehan26@gmail.com"
+		);
 		const newTask = {
-			_id: tempId,
 			category: selectedCategory,
 			title: title,
 			subtitle: description,
 			completed: false,
 			important: important,
+			user: userId,
 		};
+		const taskResponse = await TasksApi.addTask(newTask);
 
-		setTasks([...tasks, newTask]);
+		setTasks([...tasks, taskResponse]);
 		resetFields();
 		handleTaskModalVisibleChange();
 	};
@@ -55,7 +60,6 @@ const CreateTaskModal = ({
 
 					<Text style={styles.input_label}>Title</Text>
 					<TextInput
-						// placeholder="Title"
 						placeholderTextColor={colors.lightgray}
 						style={styles.input}
 						value={title}
@@ -64,7 +68,6 @@ const CreateTaskModal = ({
 
 					<Text style={styles.input_label}>Description</Text>
 					<TextInput
-						// placeholder="Description"
 						placeholderTextColor={colors.lightgray}
 						style={styles.input}
 						value={description}
