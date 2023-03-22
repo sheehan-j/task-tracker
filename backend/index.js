@@ -3,9 +3,13 @@ const app = express();
 const mongoose = require("mongoose");
 const connectToDB = require("./config/dbConfig");
 const PORT = process.env.BACKEND_PORT || 6201;
+const morgan = require("morgan");
 require("dotenv").config();
 
 connectToDB();
+
+// Set up HTTP request logger
+app.use(morgan("dev"));
 
 // Handle urlencoded data (built-in middleware)
 app.use(express.urlencoded({ extended: false }));

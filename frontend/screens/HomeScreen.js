@@ -17,44 +17,45 @@ import CreateTaskButton from "../components/CreateTaskButton";
 import CreateTaskModal from "../components/CreateTaskModal";
 import CreateCategoryModal from "../components/CreateCategoryModal";
 import colors from "../config/colors";
-import { config } from "../config/constants";
-import { getUserId } from "../util/userUtil";
+import UsersApi from "../api/UsersApi";
+import CategoriesApi from "../api/CategoriesApi";
+import TasksApi from "../api/TasksApi";
 
 const HomeScreen = ({ navigation }) => {
-	const [tasks, setTasks] = useState([
-		{
-			_id: 1,
-			category: "One",
-			title: "Buy groceries",
-			subtitle: "Get apples, oranges, and pears from Publix",
-			completed: true,
-			important: false,
-		},
-		{
-			_id: 2,
-			category: "Two",
-			title: "Wash car",
-			subtitle: "",
-			completed: true,
-			important: true,
-		},
-		{
-			_id: 3,
-			category: "One",
-			title: "Register for classes",
-			subtitle: "Appointment is March 27th at 2:00p.m.",
-			completed: false,
-			important: true,
-		},
-		{
-			_id: 4,
-			category: "One",
-			title: "Register for classes",
-			subtitle: "Appointment is March 27th at 2:00p.m.",
-			completed: false,
-			important: true,
-		},
-	]);
+	// const [tasks, setTasks] = useState([
+	// 	{
+	// 		_id: 1,
+	// 		category: "One",
+	// 		title: "Buy groceries",
+	// 		subtitle: "Get apples, oranges, and pears from Publix",
+	// 		completed: true,
+	// 		important: false,
+	// 	},
+	// 	{
+	// 		_id: 2,
+	// 		category: "Two",
+	// 		title: "Wash car",
+	// 		subtitle: "",
+	// 		completed: true,
+	// 		important: true,
+	// 	},
+	// 	{
+	// 		_id: 3,
+	// 		category: "One",
+	// 		title: "Register for classes",
+	// 		subtitle: "Appointment is March 27th at 2:00p.m.",
+	// 		completed: false,
+	// 		important: true,
+	// 	},
+	// 	{
+	// 		_id: 4,
+	// 		category: "One",
+	// 		title: "Register for classes",
+	// 		subtitle: "Appointment is March 27th at 2:00p.m.",
+	// 		completed: false,
+	// 		important: true,
+	// 	},
+	// ]);
 
 	// const [categories, setCategories] = useState([
 	// 	{ _id: 1, name: "One" },
@@ -64,6 +65,7 @@ const HomeScreen = ({ navigation }) => {
 	// 	{ _id: 5, name: "Five" },
 	// ]);
 
+	const [tasks, setTasks] = useState([]);
 	const [categories, setCategories] = useState([]);
 	const [active, setActive] = useState();
 	const [taskModalVisible, setTaskModalVisible] = useState(false);
@@ -78,30 +80,21 @@ const HomeScreen = ({ navigation }) => {
 	);
 
 	useEffect(() => {
-		const loadCategories = async () => {
-			const categoriesResponse = await getCategories();
+		const loadData = async () => {
+			const userId = await UsersApi.getUserIdByEmail(
+				"jordansheehan26@gmail.com"
+			);
+			const categoriesResponse = await CategoriesApi.getCategoriesByUser(
+				userId
+			);
+			const tasksResponse = await TasksApi.getTasksByUser(userId);
 			setCategories(categoriesResponse);
 			setActive(categoriesResponse[0].name);
+			setTasks(tasksResponse);
 		};
 
-		loadCategories();
+		loadData();
 	}, []);
-
-	const getCategories = async () => {
-		const userId = await getUserId();
-		const CATEGORIES_URL =
-			config.API_BASE_URL + "/categories/" + userId.toString();
-
-		const response = await fetch(CATEGORIES_URL, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
-		const result = await response.json();
-
-		return result;
-	};
 
 	// Recalculate task and complete tasks counts when they update
 	useEffect(() => {
